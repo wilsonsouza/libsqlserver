@@ -1,14 +1,14 @@
 /*
 *
-*  libsqlserver c++11 Version 1.0
+*  libsqlserver c++17 Version 1.1
 *
 *
 *  Created by Wilson.Souza
 *  Copyright (C) 2017, WR DevInfo, All Rights Reserved.
-*  Copyright (C) 2017, Tecsidel do Brasil, All Rights Reserved.
+
 *
 *  Description: access ms sqlserver by ado
-*  Last update:
+*  Last update: 7/2019
 *
 *  Dependence: msado15.dll
 */
@@ -68,7 +68,7 @@ database::~database( )
    disconnect( );
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall database::disconnect( )
+bool const  database::disconnect( )
 {
    try
    {
@@ -92,7 +92,7 @@ bool const __fastcall database::disconnect( )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall database::set_active_connection( bool benable )
+bool const  database::set_active_connection( bool benable )
 {
    try
    {
@@ -153,7 +153,7 @@ bool const __fastcall database::set_active_connection( bool benable )
    return true;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall database::is_connected( )
+bool const  database::is_connected( )
 {
    try
    {
@@ -169,7 +169,7 @@ bool const __fastcall database::is_connected( )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall database::begin_transaction( )
+bool const  database::begin_transaction( )
 {
    try
    {
@@ -185,7 +185,7 @@ bool const __fastcall database::begin_transaction( )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall database::commit_transaction( )
+bool const  database::commit_transaction( )
 {
    try
    {
@@ -201,7 +201,7 @@ bool const __fastcall database::commit_transaction( )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall database::rollback( )
+bool const  database::rollback( )
 {
    try
    {
@@ -217,7 +217,7 @@ bool const __fastcall database::rollback( )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-sql::table::pointer __fastcall database::execute( std::wstring const & szCmd, ExecuteOptionEnum eMode )
+sql::table::pointer  database::execute( std::wstring const & szCmd, ExecuteOptionEnum eMode )
 {
    try
    {
@@ -236,7 +236,7 @@ sql::table::pointer __fastcall database::execute( std::wstring const & szCmd, Ex
    return nullptr;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall database::execute_non_query( std::wstring const & szCmd )
+bool const  database::execute_non_query( std::wstring const & szCmd )
 {
    try
    {
@@ -254,7 +254,7 @@ bool const __fastcall database::execute_non_query( std::wstring const & szCmd )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-sql::table::pointer __fastcall database::get_catalogs( )
+sql::table::pointer  database::get_catalogs( )
 {
    try
    {
@@ -272,7 +272,7 @@ sql::table::pointer __fastcall database::get_catalogs( )
    return nullptr;
 }
 //-----------------------------------------------------------------------------------------------//
-sql::table::pointer __fastcall database::get_tables( )
+sql::table::pointer  database::get_tables( )
 {
    try
    {
@@ -290,7 +290,7 @@ sql::table::pointer __fastcall database::get_tables( )
    return nullptr;
 }
 //-----------------------------------------------------------------------------------------------//
-sql::table::pointer __fastcall database::open_schema( SchemaEnum se )
+sql::table::pointer  database::open_schema( SchemaEnum se )
 {
    try
    {
@@ -308,7 +308,7 @@ sql::table::pointer __fastcall database::open_schema( SchemaEnum se )
    return nullptr;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall database::is_catalog( std::wstring const & szCatalogName )
+bool const  database::is_catalog( std::wstring const & szCatalogName )
 {
    try
    {
@@ -346,7 +346,7 @@ bool const __fastcall database::is_catalog( std::wstring const & szCatalogName )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall database::is_table( std::wstring const & szTableName )
+bool const  database::is_table( std::wstring const & szTableName )
 {
    try
    {
@@ -385,7 +385,7 @@ bool const __fastcall database::is_table( std::wstring const & szTableName )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall database::create_database( std::wstring const & strCatalogName )
+bool const  database::create_database( std::wstring const & strCatalogName )
 {
    try
    {
@@ -402,7 +402,7 @@ bool const __fastcall database::create_database( std::wstring const & strCatalog
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall database::create_table( std::wstring const & szTableName,
+bool const  database::create_table( std::wstring const & szTableName,
                                               std::wstring const & szFields )
 {
    try
@@ -427,7 +427,7 @@ void const database::set_initial_catalog( std::wstring const & szInitialCatalog 
    emplace( config::Initial_Catalog, szInitialCatalog );
 }
 //-----------------------------------------------------------------------------------------------//
-std::unicode_string::pointer __fastcall database::get_initial_catalog( )
+std::unicode_string::pointer  database::get_initial_catalog( )
 {
    auto catalog = get_map( config::Initial_Catalog );
    /**/
@@ -439,7 +439,7 @@ std::unicode_string::pointer __fastcall database::get_initial_catalog( )
 }
 //-----------------------------------------------------------------------------------------------//
 #if defined(_SQL_EVENTS)
-void const   __fastcall database::SetConnectionPtrEventsClass( )
+void const    database::SetConnectionPtrEventsClass( )
 {
 #if 0
    /* check client window handle to notified */
@@ -467,7 +467,7 @@ void const   __fastcall database::SetConnectionPtrEventsClass( )
 #endif
 }
 //-----------------------------------------------------------------------------------------------//
-void const   __fastcall database::FinalizeConnectionPtrEventsClass( )
+void const    database::FinalizeConnectionPtrEventsClass( )
 {
 #if 0
    m_hSuccess = m_conn->QueryInterface( __uuidof( IConnectionPointContainer ),

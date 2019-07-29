@@ -1,13 +1,13 @@
 /*
 *
-*  libsql_x86_pplx c++14 Version 1.0 full unicode
+*  libsqlserver c++17 Version 1.1 full unicode
 *
 *
 *  Created by Wilson.Souza
 *  Copyright (C) 2012, 2018 WR DevInfo, All Rights Reserved.
 *
 *  Description: access ms sqlserver by ado
-*  Last update:
+*  Last update: 7/2019
 *  8/14/2018
 *  Dependence: msado15.dll
 */
@@ -20,7 +20,7 @@ query::query( sql::database const & db ) :
 {
 }
 //-----------------------------------------------------------------------------------------------//
-sql::table::pointer __fastcall query::query::exec( std::unicode_string::pointer const & sql_cmd )
+sql::table::pointer  query::query::exec( std::unicode_string::pointer const & sql_cmd )
 {
    if( sql_cmd == nullptr )
    {
@@ -29,7 +29,7 @@ sql::table::pointer __fastcall query::query::exec( std::unicode_string::pointer 
    return this->exec( sql_cmd->reference( ) );
 }
 //-----------------------------------------------------------------------------------------------//
-sql::table::pointer __fastcall query::query::exec( std::unicode_string const & sql_cmd )
+sql::table::pointer  query::query::exec( std::unicode_string const & sql_cmd )
 {
    auto tbl = allocator<table, database>( *this );
    /**/
@@ -47,7 +47,7 @@ sql::table::pointer __fastcall query::query::exec( std::unicode_string const & s
    return tbl;
 }
 //-----------------------------------------------------------------------------------------------//
-sql::query::pointer __fastcall sql::query::clone( )
+sql::query::pointer  sql::query::clone( )
 {
    return allocator<query, database>( *this );
 }

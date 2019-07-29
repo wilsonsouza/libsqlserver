@@ -1,14 +1,14 @@
 /*
 *
-*  libsqlserver c++11 Version 1.0
+*  libsqlserver c++17 Version 1.1
 *
 *
 *  Created by Wilson.Souza
 *  Copyright (C) 2017, WR DevInfo, All Rights Reserved.
-*  Copyright (C) 2017, Tecsidel do Brasil, All Rights Reserved.
+
 *
 *  Description: access ms sqlserver by ado
-*  Last update:
+*  Last update: 7/2019
 *
 *  Dependence: msado15.dll
 */
@@ -63,7 +63,7 @@ table::~table( )
    }
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall table::open( std::wstring const & tablename,
+bool const  table::open( std::wstring const & tablename,
                                    CommandTypeEnum cteCommandType,
                                    CursorTypeEnum ctCursorType,
                                    LockTypeEnum ltLockType )
@@ -125,7 +125,7 @@ bool const __fastcall table::open( std::wstring const & tablename,
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall table::eof( )
+bool const  table::eof( )
 {
    try
    {
@@ -138,7 +138,7 @@ bool const __fastcall table::eof( )
    return true;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall table::bof( )
+bool const  table::bof( )
 {
    try
    {
@@ -151,7 +151,7 @@ bool const __fastcall table::bof( )
    return true;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall table::go( long const lrecno )
+bool const  table::go( long const lrecno )
 {
    try
    {
@@ -175,7 +175,7 @@ bool const __fastcall table::go( long const lrecno )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-long const __fastcall table::reccount( )
+long const  table::reccount( )
 {
    try
    {
@@ -194,12 +194,12 @@ long const __fastcall table::reccount( )
    return 0L;
 }
 //-----------------------------------------------------------------------------------------------//
-long const __fastcall table::recno( )
+long const  table::recno( )
 {
    return m_lrecno;
 }
 //-----------------------------------------------------------------------------------------------//
-long const __fastcall table::lastrec( )
+long const  table::lastrec( )
 {
    try
    {
@@ -212,7 +212,7 @@ long const __fastcall table::lastrec( )
    return 0L;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall table::top( )
+bool const  table::top( )
 {
    try
    {
@@ -228,7 +228,7 @@ bool const __fastcall table::top( )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall table::bottom( )
+bool const  table::bottom( )
 {
    try
    {
@@ -244,7 +244,7 @@ bool const __fastcall table::bottom( )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall table::next( )
+bool const  table::next( )
 {
    try
    {
@@ -260,7 +260,7 @@ bool const __fastcall table::next( )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall table::previous( )
+bool const  table::previous( )
 {
    try
    {
@@ -276,12 +276,12 @@ bool const __fastcall table::previous( )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall table::skip( long lrecno )
+bool const  table::skip( long lrecno )
 {
    return go( lrecno );
 }
 //-----------------------------------------------------------------------------------------------//
-void const __fastcall table::close( )
+void const  table::close( )
 {
    try
    {
@@ -294,17 +294,17 @@ void const __fastcall table::close( )
    }
 }
 //-----------------------------------------------------------------------------------------------//
-field::pointer __fastcall table::operator[]( std::wstring const & strname )
+field::pointer  table::operator[]( std::wstring const & strname )
 {
    return get_field( strname );
 }
 //-----------------------------------------------------------------------------------------------//
-field::pointer __fastcall table::operator[]( std::unicode_string::pointer const & pname )
+field::pointer  table::operator[]( std::unicode_string::pointer const & pname )
 {
    return get_field( pname );
 }
 //-----------------------------------------------------------------------------------------------//
-field::pointer __fastcall table::operator[]( unsigned int uIndex )
+field::pointer  table::operator[]( unsigned int uIndex )
 {
    auto fps = m_db->GetFields( );
    /**/
@@ -323,7 +323,7 @@ field::pointer __fastcall table::operator[]( unsigned int uIndex )
    return field::pointer( new field( fps->GetItem( index ) ) );
 }
 //-----------------------------------------------------------------------------------------------//
-field::pointer __fastcall table::get_field( std::wstring const & strname )
+field::pointer  table::get_field( std::wstring const & strname )
 {
    auto fps = m_db->GetFields( );
    auto offset = int( fps->Count );
@@ -356,12 +356,12 @@ field::pointer __stdcall table::get_field( std::unicode_string::pointer const & 
    return get_field( pname->data( ) );
 }
 //-----------------------------------------------------------------------------------------------//
-field::pointer __fastcall table::get_field( unsigned int uIndex )
+field::pointer  table::get_field( unsigned int uIndex )
 {
    return table::operator[]( uIndex );
 }
 //-----------------------------------------------------------------------------------------------//
-table::multimap_type & __fastcall table::get_fieldlist( std::initializer_list<std::wstring> const ignored_list )
+table::multimap_type &  table::get_fieldlist( std::initializer_list<std::wstring> const ignored_list )
 {
    /* call by pplx */
    run_and_wait( [ &, this ]
@@ -406,7 +406,7 @@ table::multimap_type & __fastcall table::get_fieldlist( std::initializer_list<st
    return *this;
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall table::is_actived( )
+bool const  table::is_actived( )
 {
    try
    {
@@ -423,7 +423,7 @@ bool const __fastcall table::is_actived( )
 }
 //-----------------------------------------------------------------------------------------------//
 #if defined(_SQL_EVENTS)
-void const __fastcall table::SetRecordsetPtrEventsClass( )
+void const  table::SetRecordsetPtrEventsClass( )
 {
    /* check client window handle to notified */
    m_hSuccess = _RecordsetPtr::operator->( )->QueryInterface( __uuidof( IConnectionPointContainer ),
@@ -448,7 +448,7 @@ void const __fastcall table::SetRecordsetPtrEventsClass( )
    m_pConnPoint->Release( );
 }
 //-----------------------------------------------------------------------------------------------//
-void const __fastcall table::FinalizeRecordsetPtrEventsClass( )
+void const  table::FinalizeRecordsetPtrEventsClass( )
 {
    /* event class not started */
    m_hSuccess = _RecordsetPtr::operator->( )->QueryInterface( __uuidof( IConnectionPointContainer ),

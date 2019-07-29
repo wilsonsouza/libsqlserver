@@ -1,13 +1,13 @@
 /*
 *
-*  libsql_x86_pplx c++14 Version 1.0
+*  libsqlserver c++17 Version 1.1
 *
 *
 *  Created by Wilson.Souza
 *  Copyright (C) 2012, 2018, WR DevInfo, All Rights Reserved.
 *
 *  Description: access ms sqlserver by ado
-*  Last update:
+*  Last update: 7/2019
 *
 *  Dependence: msado15.dll, sqlncli.lib
 */
@@ -15,39 +15,41 @@
 #include <sql_server_defs.hpp>
 #include <map>
 //-----------------------------------------------------------------------------------------------//
-namespace sql
+namespace sql::server
 {
-   class connection_impl: public _ConnectionPtr
+   class connection_impl: public Connection15, public concurrency::task_group
    {
    public:
-      struct data
+      struct database_access_data
       {
-         using pointer = std::shared_ptr<sql::connection_impl::data>;
+         using pointer = std::shared_ptr<connection_impl::database_access_data>;
          //
-         std::aul::string<wchar_t> m_dns{};
-         std::aul::string<wchar_t> m_user{};
-         std::aul::string<wchar_t> m_password{};
-         std::aul::string<wchar_t> m_database_name{};
+         std::string_view m_dns{};
+         std::string_view m_user{};
+         std::string_view m_password{};
+         std::string_view m_database_name{};
          bool m_connected{ false };
          //
-         data() = default;
-         data(sql::connection_impl::data const & in) = delete;
+			database_access_data() = default;
+         database_access_data(connection_impl::database_access_data const & in) = delete;
       };
       //
-      using interanL_stacker = std::multimap<std::size_t, sql::connection_impl const &>;
-      using connection = _Connection;
+      using internal_stacker_map = std::multimap<std::size_t, connection_impl const &>;
+		//
    protected:
-      connection_impl::data::pointer m_data;
-      std::size_t m_connection_id = 0;
+		connection_impl::database_access_data::pointer m_db_data_access{ nullptr };
+		std::size_t m_connection_id{ 0 };
+		//
    public:
-      static bool m_complus_ok;
-      static std::size_t m_id;
-      static sql::connection_impl::interanL_stacker m_internal_stacker;
+		static bool m_complus_ok;
+		static std::size_t m_id;
+		static connection_impl::internal_stacker_map m_internal_stacker;
+		//
    public:
       explicit connection_impl( ) noexcept;
-      ~connection_impl( ) noexcept;
-      virtual bool open(sql::connection_impl::data::pointer const & data) = 0;
-      virtual bool close( ) = 0;
+      virtual ~connection_impl( ) noexcept;
+      virtual bool open(connection_impl::database_access_data::pointer const & db_data) = 0;
+      virtual bool close( );
       bool is_connected( ) const;
       //
    private:

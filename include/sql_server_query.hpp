@@ -1,30 +1,35 @@
 /*
 *
-*  libsqlserver c++11 Version 1.0
+*  libsqlserver c++17 Version 1.1
 *
 *
 *  Created by Wilson.Souza
 *  Copyright (C) 2017, WR DevInfo, All Rights Reserved.
-*  Copyright (C) 2017, Tecsidel do Brasil, All Rights Reserved.
+
 *
 *  Description: access ms sqlserver by ado
-*  Last update:
+*  Last update: 7/2019
 *
-*  Dependence: odbc32.lib
+*  Dependence: msado15.dll
 */
 #pragma once
-#include <sql_server_connection.hpp>
+#include <sql_database.hpp>
+#include <sql_table.hpp>
 //-----------------------------------------------------------------------------------------------//
 namespace sql
 {
-   class query: public ADORecordset
+   class _SQLDYNAMICLINK query : public sql::database
    {
-   protected:
-      sql::server_connection::server_connection_pointer m_connection;
-      _RecordsetPtr m_record_ptr = NULL;
    public:
-      explicit sql_query( std::shared_ptr<sql_connection> const & db_conn ) noexcept;
-      virtual ~sql_query( );
-      virtual bool execute( );
+      using pointer = std::shared_ptr<sql::query>;
+      using pointer_const = pointer const;
+   public:
+      query( ) = default;
+      explicit query( sql::database const & db );
+      virtual ~query( ) = default;
+      sql::table::pointer  exec( std::unicode_string::pointer const & sql_cmd );
+      sql::table::pointer  exec( std::unicode_string const & sql_cmd );
+      sql::query::pointer  clone( );
    };
-}
+};
+//-----------------------------------------------------------------------------------------------//

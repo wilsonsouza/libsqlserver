@@ -1,14 +1,14 @@
 /*
 *
-*  libsqlserver c++11 Version 1.0
+*  libsqlserver c++17 Version 1.1
 *
 *
 *  Created by Wilson.Souza
 *  Copyright (C) 2017, WR DevInfo, All Rights Reserved.
-*  Copyright (C) 2017, Tecsidel do Brasil, All Rights Reserved.
+
 *
 *  Description: access ms sqlserver by ado
-*  Last update:
+*  Last update: 7/2019
 *
 *  Dependence: msado15.dll
 */
@@ -31,7 +31,7 @@ field::~field( )
    GetInterfacePtr( )->Release( );
 }
 //-----------------------------------------------------------------------------------------------//
-std::unicode_string::pointer const __fastcall field::to_string( )
+std::unicode_string::pointer const  field::to_string( )
 {
    auto const v = value( );
    /**/
@@ -47,7 +47,7 @@ std::unicode_string::pointer const __fastcall field::to_string( )
    return std::unicode_string::alloc( );
 }
 //-----------------------------------------------------------------------------------------------//
-long const __fastcall field::to_long( )
+long const  field::to_long( )
 {
    auto const v = value( );
    /**/
@@ -58,7 +58,7 @@ long const __fastcall field::to_long( )
    return 0L;
 }
 //-----------------------------------------------------------------------------------------------//
-unsigned int const __fastcall field::to_unsigned_int( )
+unsigned int const  field::to_unsigned_int( )
 {
    auto const v = value( );
    /**/
@@ -69,7 +69,7 @@ unsigned int const __fastcall field::to_unsigned_int( )
    return 0;
 }
 //-----------------------------------------------------------------------------------------------//
-int const __fastcall field::to_int( )
+int const  field::to_int( )
 {
    auto const v = value( );
    /**/
@@ -80,7 +80,7 @@ int const __fastcall field::to_int( )
    return 0;
 }
 //-----------------------------------------------------------------------------------------------//
-std::unicode_string::pointer const __fastcall field::to_char( )
+std::unicode_string::pointer const  field::to_char( )
 {
    auto const v = value( );
    /**/
@@ -91,7 +91,7 @@ std::unicode_string::pointer const __fastcall field::to_char( )
    return std::unicode_string::alloc();
 }
 //-----------------------------------------------------------------------------------------------//
-bool const __fastcall field::to_bool( )
+bool const  field::to_bool( )
 {
    auto const v = value( );
    /**/
@@ -102,7 +102,7 @@ bool const __fastcall field::to_bool( )
    return false;
 }
 //-----------------------------------------------------------------------------------------------//
-sql::date const __fastcall field::to_date( )
+sql::date const  field::to_date( )
 {
    auto const v = value( );
    /**/
@@ -113,7 +113,7 @@ sql::date const __fastcall field::to_date( )
    return sql::date( );
 }
 //-----------------------------------------------------------------------------------------------//
-std::unicode_string::pointer const __fastcall field::to_blob( )
+std::unicode_string::pointer const  field::to_blob( )
 {
    auto const v = value( );
 
@@ -124,7 +124,7 @@ std::unicode_string::pointer const __fastcall field::to_blob( )
    return std::unicode_string::alloc();
 }
 //-----------------------------------------------------------------------------------------------//
-_variant_t const __fastcall field::value( ) const
+_variant_t const  field::value( ) const
 {
    auto v = _variant_t( );
    /**/
@@ -142,7 +142,7 @@ _variant_t const __fastcall field::value( ) const
    return v;
 }
 //-----------------------------------------------------------------------------------------------//
-void const __fastcall field::set_value( _variant_t const vtvalue )
+void const  field::set_value( _variant_t const vtvalue )
 {
    if ( vtvalue.vt != VT_NULL )
    {
@@ -150,7 +150,7 @@ void const __fastcall field::set_value( _variant_t const vtvalue )
    }
 }
 //-----------------------------------------------------------------------------------------------//
-sql::sql_type const __fastcall field::type( )
+sql::sql_type const  field::type( )
 {
    auto ltype = sql_type::SQL_FIELD_UNKNOW_TYPE;
    auto nType = GetInterfacePtr( )->Type;
@@ -207,7 +207,7 @@ sql::sql_type const __fastcall field::type( )
    return ltype;
 }
 //-----------------------------------------------------------------------------------------------//
-long const __fastcall field::size( )
+long const  field::size( )
 {
    long loffset = 0;
    /**/
@@ -218,7 +218,7 @@ long const __fastcall field::size( )
    return 0;
 }
 //-----------------------------------------------------------------------------------------------//
-std::unicode_string::pointer const __fastcall field::name( )
+std::unicode_string::pointer const  field::name( )
 {
    auto field = GetInterfacePtr( );
    auto fname = std::unicode_string::copy_alloc( field->Name );
@@ -230,7 +230,7 @@ std::unicode_string::pointer const __fastcall field::name( )
    return std::unicode_string::alloc( );
 }
 //-----------------------------------------------------------------------------------------------//
-double const __fastcall field::to_double( )
+double const  field::to_double( )
 {
    auto const v = value( );
    /**/
